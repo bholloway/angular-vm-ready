@@ -19,6 +19,7 @@ function angularVmReadyFactory($timeout) {
         delayAssert = NaN,
         delayNegate = NaN,
         logger      = noop,
+        lastChange  = 0,
         timeout;
 
     var self = assign(testReady, {
@@ -35,24 +36,32 @@ function angularVmReadyFactory($timeout) {
      */
     function testReady() {
       var remaining = fieldList.filter(testValueIsFalsey).map(quote).join(', '),
-          isReady   = !remaining.length;
+          isReady   = !remaining.length,
+          isChange  = !lastChange || ((lastChange > 0) !== isReady);
 
-      // logging
-      if (isReady) {
-        logger('view-model ready');
-      } else {
+      // log progress
+      if (!isReady) {
         var obtained = fieldList.filter(testValueIsTruthy).map(quote).join(', ');
         logger((obtained.length ? ('obtained ' + obtained + ' ') : '') + 'still waiting on', remaining);
       }
 
-      // assign optional VM flag
-      if (flag) {
-        $timeout.clear(timeout);
+      // any change in readiness
+      if (isChange) {
+
+        // log completion
         if (isReady) {
-          timeout = isNaN(delayAssert) ? $timeout(assert, delayAssert) : assert();
+          logger('view-model ready');
+        }
+
+        // assign optional VM flag
+        $timeout.cancel(timeout);
+        if (isReady) {
+          timeout = !flag ? null : isNaN(delayAssert) ? assert() : $timeout(assert, delayAssert);
+          lastChange = +1;
         }
         else {
-          timeout = isNaN(delayNegate) ? $timeout(negate, delayAssert) : negate();
+          timeout = !flag ? null : isNaN(delayNegate) ? negate() : $timeout(negate, delayAssert);
+          lastChange = -1;
         }
       }
 
@@ -116,10 +125,16 @@ function angularVmReadyFactory($timeout) {
     }
 
     function assert() {
+      if (logger) {
+        logger('assert flag view-model flag "' + flag + '"');
+      }
       vm[flag] = true;
     }
 
     function negate() {
+      if (logger) {
+        logger('negate flag view-model flag "' + flag + '"');
+      }
       vm[flag] = false;
     }
 
