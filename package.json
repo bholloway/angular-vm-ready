@@ -1,0 +1,30 @@
+{
+  "name": "angular-vm-ready",
+  "version": "0.0.1",
+  "description": "An Angular 1.x factory for a test utility which determines whether a controller view-model is ready ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bholloway/angular-vm-ready.git"
+  },
+  "keywords": [
+    "viewmodel",
+    "states",
+    "flags",
+    "ready",
+    "scope",
+    "angular"
+  ],
+  "author": "bholloway",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bholloway/angular-vm-ready/issues"
+  },
+  "homepage": "https://github.com/bholloway/angular-vm-ready",
+  "dependencies": {
+    "lodash.assign": "^3.2.0"
+  }
+}
