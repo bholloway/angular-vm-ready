@@ -2,10 +2,10 @@ var assign = require('lodash.assign');
 
 /**
  * An Angular 1.x factory for a test utility which determines whether a controller view-model is ready.
- * @ngInject
  * @returns {function} A factory for a test method
  */
 function angularVmReadyFactory($timeout) {
+  'ngInject';
 
   /**
    * Create a test mether that will check whether the view-model is ready.

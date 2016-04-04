@@ -1,7 +1,7 @@
 {
   "name": "angular-vm-ready",
-  "version": "0.0.1",
-  "description": "An Angular 1.x factory for a test utility which determines whether a controller view-model is ready ",
+  "version": "1.0.0",
+  "description": "An Angular 1.x factory for a test utility which determines whether a controller view-model is ready",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
